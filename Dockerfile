@@ -24,7 +24,8 @@ FROM alpine:3.12.1 AS e2e
 WORKDIR /go/bin
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /workspace/bin/e6e.test /go/bin/e6e.test
-CMD [ "/go/bin/e6e.test", "-test.coverprofile=/tmp/coverage.out" ]
+# CMD [ "/go/bin/e6e.test", "-test.coverprofile=/tmp/coverage.out" ]
+CMD [ "sleep", "500" ]
 
 # Stage #3: Install the production binary in a minimal deployment image
 #===========================================================#

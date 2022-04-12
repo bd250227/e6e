@@ -26,4 +26,4 @@ jobs:
       run: docker build --tag e6e:$(date +%s) .
 
     - name: Build the E2E TESTING Docker image
-      run: docker build --target e2e --tag e6e-test:$(date +%s) .
+      run: docker build --target e2e --tag e6e-e2e:$(date +%s) .

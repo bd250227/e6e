@@ -15,7 +15,6 @@ spec:
     spec:
       containers:
       - name: e6e
-        image: localhost:32000/jarvis-e2e
-        #imagePullPolicy: Never
+        image: localhost:32000/e6e:1649770210
         ports:
         - containerPort: 8000
