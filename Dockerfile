@@ -21,15 +21,16 @@ RUN GOARCH=amd64\
 # Stage #2: Install the test binary in a production-like image
 #===========================================================#
 FROM alpine:3.12.1 AS e2e
+EXPOSE 8001
 WORKDIR /go/bin
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /workspace/bin/e6e.test /go/bin/e6e.test
-# CMD [ "/go/bin/e6e.test", "-test.coverprofile=/tmp/coverage.out" ]
-CMD [ "sleep", "500" ]
+CMD [ "/go/bin/e6e.test", "-port=8001", "-test.coverprofile=/tmp/coverage.out" ]
 
 # Stage #3: Install the production binary in a production image
 #===========================================================#
 FROM alpine:3.12.1 AS prod
+EXPOSE 8000
 WORKDIR /go/bin
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /workspace/bin/main /go/bin/app

@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: e6e-e2e
-        image: localhost:32000/e6e-e2e:1649773206
+        image: localhost:32000/e6e-e2e:1649792738
         ports:
         - containerPort: 8001
