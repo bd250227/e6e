@@ -19,7 +19,7 @@ A side-car container is required to enable e2e code coverage metrics: a file det
 The granularity of these metrics is arbitrary because the completion of a coverage report is triggered by the shutdown of the pod.  Transmission of `SIGINT` AND `SIGTERM` OS signals can therefore be used for arbitrary segmentation of the coverage report. This enables the tester to have per-test attribution of code coverage.
 
 ## Try it Out
-This application has only been verified on a Linux host (Manjaro) using Microk8s.  The most important dependency is the use of the Microk8s local container registry, avaiable at localhost:32000.  `If you do not have this running the demo will NOT WORK`.  
+This application has only been verified on a Linux host (Manjaro) using Microk8s.  The most important dependency is the use of the Microk8s local container registry, avaiable at localhost:32000.  `If you do not have this running the demo will NOT WORK`.  If you don't have this dependency, you can use E6E without k8s by following the README in [e6e](go/e6e/README.md)
 
 Terminal 1:
 ```bash
