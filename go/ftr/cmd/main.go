@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -31,13 +32,12 @@ func main() {
 				if !ok {
 					log.Fatal("received NOT OK on watcher.Events channel")
 				}
-				log.Println("event: ", event)
-				if event.Op&fsnotify.Write == fsnotify.Write {
-					log.Println("modified file: ", event.Name)
-				}
 
-				done <- struct{}{}
-				return
+				if event.Op&fsnotify.Write == fsnotify.Write {
+					// log.Println("modified file: ", event.Name)
+					done <- struct{}{}
+					return
+				}
 			case err, ok := <-watcher.Errors:
 				if !ok {
 					log.Fatal("received NOT OK on watcher.Errors channel")
@@ -60,5 +60,6 @@ func main() {
 	if err != nil {
 		log.Fatal("could not read coverage file: ", err)
 	}
-	log.Println("content: ", string(content))
+
+	fmt.Print(string(content))
 }
