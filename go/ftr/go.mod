@@ -1,4 +1,4 @@
-module e6e
+module ftr
 
 go 1.17
 

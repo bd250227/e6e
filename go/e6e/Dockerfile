@@ -8,11 +8,11 @@ COPY . .
 
 # Build prod binary ( Linker flags - omit debug symbols for a small build size )
 RUN GOARCH=amd64 GOOS=linux CGO_ENABLED=0\
-    go build -ldflags="-w -s" -o bin/main
+    go build -ldflags="-w -s" -o bin/e6e ./cmd
 
 # Build test binary
 RUN GOARCH=amd64 GOOS=linux CGO_ENABLED=0\
-    go test -c -coverpkg='e6e/...' -o bin/e6e.test -tags testrunmain e6e
+    go test -c -coverpkg='e6e/...' -o bin/e6e.test -tags testrunmain e6e/cmd
 
 # Stage #2A: Install the test binary in a production-like image
 #===========================================================#
@@ -29,5 +29,5 @@ FROM alpine:3.12.1 AS prd
 EXPOSE 8000
 WORKDIR /go/bin
 RUN apk add --no-cache ca-certificates
-COPY --from=builder /workspace/bin/main /go/bin/app
-CMD [ "/go/bin/app", "-port=8000" ]
+COPY --from=builder /workspace/bin/e6e /go/bin/e6e
+CMD [ "/go/bin/e6e", "-port=8000" ]
