@@ -22,8 +22,20 @@ jobs:
     #     username: ${{ github.actor }}
     #     password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build the PRODUCTION Docker image
-      run: docker build --tag e6e:$(date +%s) .
+    - name: Build and publish the PRODUCTION Docker image
+      run: |
+        docker image build --file go/e6e/Dockerfile -t e6e go/e6e
+	      # docker tag e6e localhost:32000/e6e:$(now)
+	      # docker push localhost:32000/e6e:$(now)
 
-    - name: Build the E2E TESTING Docker image
-      run: docker build --target e2e --tag e6e-e2e:$(date +%s) .
+    - name: Build and publish the E2E TESTING Docker image
+      run: |
+        docker image build --file go/e6e/Dockerfile -t e6e-e2e --target e2e go/e6e
+	      # docker tag e6e-e2e localhost:32000/e6e-e2e:$(now)
+	      # docker push localhost:32000/e6e-e2e:$(now)
+
+    - name: Build and publish the COVERAGE REPORTER Docker image
+      run: |
+        docker image build --file go/ftr/Dockerfile -t ftr go/ftr
+	      # docker tag ftr localhost:32000/ftr:$(now)
+	      # docker push localhost:32000/ftr:$(now)

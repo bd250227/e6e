@@ -18,14 +18,14 @@ spec:
         emptyDir: {}
       containers:
       - name: e6e-e2e
-        image: localhost:32000/e6e-e2e:1649858137
+        image: localhost:32000/e6e-e2e:1649860062
         ports:
         - containerPort: 8001
         volumeMounts:
         - name: coverage-file
           mountPath: /tmp
       - name: ftr
-        image: localhost:32000/ftr:1649858137
+        image: localhost:32000/ftr:1649860062
         volumeMounts:
         - name: coverage-file
           mountPath: /tmp
