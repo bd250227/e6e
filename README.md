@@ -29,7 +29,7 @@ kubectl logs -f <pod-name> -c ftr > go/e6e/bin/coverage.out
 Terminal 2:
 ```bash
 # optional: exercise the test
-kubectl expose e6e-e2e-deployment --type=LoadBalancer
+kubectl expose deployment e6e-e2e-deployment --type=LoadBalancer
 curl <svc-ip>:8001
 # ===========================
 
