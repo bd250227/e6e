@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: e6e-e2e-deployment
+  name: example-e2e-deployment
   labels:
     app: e6e-e2e
 spec:
@@ -14,18 +14,26 @@ spec:
         app: e6e-e2e
     spec:
       volumes:
-      - name: coverage-file
-        emptyDir: {}
+        - name: coverage-file
+          emptyDir: {}
       containers:
-      - name: e6e-e2e
-        image: localhost:32000/e6e-e2e:%TIMESTAMP%
-        ports:
-        - containerPort: 8001
-        volumeMounts:
-        - name: coverage-file
-          mountPath: /tmp
-      - name: ftr
-        image: localhost:32000/ftr:%TIMESTAMP%
-        volumeMounts:
-        - name: coverage-file
-          mountPath: /tmp
+        - name: e6e-e2e
+          image: localhost:32000/e6e-e2e:%TIMESTAMP%
+          ports:
+            - containerPort: 8001
+          volumeMounts:
+            - name: coverage-file
+              mountPath: /tmp
+          resources:
+            limits:
+              cpu: "30m"
+              memory: "200Mi"
+        - name: ftr
+          image: localhost:32000/ftr:%TIMESTAMP%
+          volumeMounts:
+            - name: coverage-file
+              mountPath: /tmp
+          resources:
+            limits:
+              cpu: "30m"
+              memory: "200Mi"
