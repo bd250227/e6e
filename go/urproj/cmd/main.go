@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"e6e/pkg/msg"
+	"urproj/pkg/msg"
 )
 
 var portFlag = flag.Int("port", 8000, "msg server port")

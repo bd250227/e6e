@@ -1,20 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: e6e-deployment
+  name: urproj-deployment
+  namespace: e6e
   labels:
-    app: e6e
+    app: urproj
 spec:
   selector:
     matchLabels:
-      app: e6e
+      app: urproj
   template:
     metadata:
       labels:
-        app: e6e
+        app: urproj
     spec:
       containers:
-      - name: e6e
-        image: localhost:32000/e6e:%TIMESTAMP%
-        ports:
-        - containerPort: 8000
+        - name: urproj
+          image: localhost:32000/urproj:%TIMESTAMP%
+          ports:
+            - containerPort: 8000
+          resources:
+            limits:
+              cpu: "30m"
+              memory: "200Mi"
