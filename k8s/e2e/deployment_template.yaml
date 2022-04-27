@@ -1,26 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: example-e2e-deployment
+  name: urproj-e2e-deployment
+  namespace: e6e
   labels:
-    app: e6e-e2e
+    app: urproj-e2e
 spec:
   selector:
     matchLabels:
-      app: e6e-e2e
+      app: urproj-e2e
   template:
     metadata:
       labels:
-        app: e6e-e2e
+        app: urproj-e2e
     spec:
       volumes:
         - name: coverage-file
           emptyDir: {}
       containers:
-        - name: e6e-e2e
-          image: localhost:32000/e6e-e2e:%TIMESTAMP%
+        - name: urproj-e2e
+          image: localhost:32000/urproj-e2e:%TIMESTAMP%
           ports:
-            - containerPort: 8001
+            - containerPort: 8000
           volumeMounts:
             - name: coverage-file
               mountPath: /tmp

@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: example-prd-deployment
+  name: urproj-deployment
+  namespace: e6e
   labels:
-    app: example
+    app: urproj
 spec:
   selector:
     matchLabels:
-      app: example
+      app: urproj
   template:
     metadata:
       labels:
-        app: example
+        app: urproj
     spec:
       containers:
-        - name: example
-          image: localhost:32000/example:%TIMESTAMP%
+        - name: urproj
+          image: localhost:32000/urproj:%TIMESTAMP%
           ports:
             - containerPort: 8000
           resources:
-          limits:
-            cpu: "30m"
-            memory: "200Mi"
+            limits:
+              cpu: "30m"
+              memory: "200Mi"

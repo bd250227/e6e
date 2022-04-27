@@ -1,1 +1,16 @@
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: urproj-service
+  namespace: e6e
+  labels:
+    app: urproj
+spec:
+  type: LoadBalancer
+  selector:
+    app: urproj
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8000
