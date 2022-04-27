@@ -32,7 +32,7 @@ Terminal 2:
 curl <svc-ip>:8000
 # ===========================
 
-kubectl -n e6e scale --replicas 0 deployment e6e-e2e-deployment
+kubectl -n e6e scale --replicas 0 deployment urproj-e2e-deployment
 ```
 
 Terminal 3:
