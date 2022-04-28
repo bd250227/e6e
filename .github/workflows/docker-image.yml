@@ -23,10 +23,10 @@ jobs:
     #     password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and publish the PRODUCTION Docker image
-      run: docker image build --file go/e6e/Dockerfile -t e6e go/e6e
+      run: docker image build --file go/urproj/Dockerfile -t urproj go/urproj
 
     - name: Build and publish the E2E TESTING Docker image
-      run: docker image build --file go/e6e/Dockerfile -t e6e-e2e --target e2e go/e6e
+      run: docker image build --file go/urproj/Dockerfile -t urproj-e2e --target e2e go/urproj
 
     - name: Build and publish the COVERAGE REPORTER Docker image
       run: docker image build --file go/ftr/Dockerfile -t ftr go/ftr
