@@ -22,23 +22,26 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Add SHORT_SHA env property with commit short sha
+      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
     - name: Build and publish the PRODUCTION Docker image
       run: |
-        docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj:${GITHUB_SHA}" go/urproj
-        docker push "ghcr.io/bd250227/urproj:${GITHUB_SHA}"
-        docker tag "ghcr.io/bd250227/ftr:${GITHUB_SHA}" ghcr.io/bd250227/ftr:latest
+        docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj:${SHORT_SHA}" go/urproj
+        docker push "ghcr.io/bd250227/urproj:${SHORT_SHA}"
+        docker tag "ghcr.io/bd250227/ftr:${SHORT_SHA}" ghcr.io/bd250227/ftr:latest
         docker push ghcr.io/bd250227/ftr:latest
 
     - name: Build and publish the E2E TESTING Docker image
       run: |
-        docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj-e2e:${GITHUB_SHA}" --target e2e go/urproj
-        docker push "ghcr.io/bd250227/urproj-e2e:${GITHUB_SHA}"
+        docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}" --target e2e go/urproj
+        docker push "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}"
         docker tag ghcr.io/bd250227/urproj-e2e:latest
         docker push ghcr.io/bd250227/urproj-e2e:latest
 
     - name: Build and publish the COVERAGE REPORTER Docker image
       run: |
-        docker build --file go/ftr/Dockerfile -t "ghcr.io/bd250227/ftr:${GITHUB_SHA}" go/ftr
-        docker push "ghcr.io/bd250227/ftr:${GITHUB_SHA}"
+        docker build --file go/ftr/Dockerfile -t "ghcr.io/bd250227/ftr:${SHORT_SHA}" go/ftr
+        docker push "ghcr.io/bd250227/ftr:${SHORT_SHA}"
         docker tag ghcr.io/bd250227/ftr:latest
         docker push ghcr.io/bd250227/ftr:latest
