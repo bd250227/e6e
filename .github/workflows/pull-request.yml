@@ -7,38 +7,48 @@ on:
     branches: [ master ]
 
 jobs:
-
-  build:
-
+  test-urproj:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
+    - name: Go Test 
+      run: |
+        cd go/urproj
+        go test ./...
+  test-ftr:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Go Test 
+      run: |
+        cd go/ftr
+        go test ./...
 
+  docker-push:
+    needs: [ test-urproj, test-ftr]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
     - name: Log in to the Container registry
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Add SHORT_SHA env property with commit short sha
       run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-
     - name: Build and publish the PRODUCTION Docker image
       run: |
         docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj:${SHORT_SHA}" go/urproj
         docker push "ghcr.io/bd250227/urproj:${SHORT_SHA}"
         docker tag "ghcr.io/bd250227/urproj:${SHORT_SHA}" ghcr.io/bd250227/urproj:latest
         docker push ghcr.io/bd250227/urproj:latest
-
     - name: Build and publish the E2E TESTING Docker image
       run: |
         docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}" --target e2e go/urproj
         docker push "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}"
         docker tag "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}" ghcr.io/bd250227/urproj-e2e:latest
         docker push ghcr.io/bd250227/urproj-e2e:latest
-
     - name: Build and publish the COVERAGE REPORTER Docker image
       run: |
         docker build --file go/ftr/Dockerfile -t "ghcr.io/bd250227/ftr:${SHORT_SHA}" go/ftr
