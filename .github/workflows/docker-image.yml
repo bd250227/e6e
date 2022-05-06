@@ -29,7 +29,7 @@ jobs:
       run: |
         docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj:${SHORT_SHA}" go/urproj
         docker push "ghcr.io/bd250227/urproj:${SHORT_SHA}"
-        docker tag "ghcr.io/bd250227/urproj:${SHORT_SHA}" ghcr.io/bd250227/ftr:latest
+        docker tag "ghcr.io/bd250227/urproj:${SHORT_SHA}" ghcr.io/bd250227/urproj:latest
         docker push ghcr.io/bd250227/urproj:latest
 
     - name: Build and publish the E2E TESTING Docker image
