@@ -23,10 +23,22 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and publish the PRODUCTION Docker image
-      run: docker image build --file go/urproj/Dockerfile -t urproj go/urproj
+      run: |
+        docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj:${GITHUB_SHA}" go/urproj
+        docker push "ghcr.io/bd250227/urproj:${GITHUB_SHA}"
+        docker tag "ghcr.io/bd250227/ftr:${GITHUB_SHA}" ghcr.io/bd250227/ftr:latest
+        docker push ghcr.io/bd250227/ftr:latest
 
     - name: Build and publish the E2E TESTING Docker image
-      run: docker image build --file go/urproj/Dockerfile -t urproj-e2e --target e2e go/urproj
+      run: |
+        docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj-e2e:${GITHUB_SHA}" --target e2e go/urproj
+        docker push "ghcr.io/bd250227/urproj-e2e:${GITHUB_SHA}"
+        docker tag ghcr.io/bd250227/urproj-e2e:latest
+        docker push ghcr.io/bd250227/urproj-e2e:latest
 
     - name: Build and publish the COVERAGE REPORTER Docker image
-      run: docker image build --file go/ftr/Dockerfile -t ftr go/ftr
+      run: |
+        docker build --file go/ftr/Dockerfile -t "ghcr.io/bd250227/ftr:${GITHUB_SHA}" go/ftr
+        docker push "ghcr.io/bd250227/ftr:${GITHUB_SHA}"
+        docker tag ghcr.io/bd250227/ftr:latest
+        docker push ghcr.io/bd250227/ftr:latest
