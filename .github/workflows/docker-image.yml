@@ -36,12 +36,12 @@ jobs:
       run: |
         docker build --file go/urproj/Dockerfile -t "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}" --target e2e go/urproj
         docker push "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}"
-        docker tag ghcr.io/bd250227/urproj-e2e:latest
+        docker tag "ghcr.io/bd250227/urproj-e2e:${SHORT_SHA}" ghcr.io/bd250227/urproj-e2e:latest
         docker push ghcr.io/bd250227/urproj-e2e:latest
 
     - name: Build and publish the COVERAGE REPORTER Docker image
       run: |
         docker build --file go/ftr/Dockerfile -t "ghcr.io/bd250227/ftr:${SHORT_SHA}" go/ftr
         docker push "ghcr.io/bd250227/ftr:${SHORT_SHA}"
-        docker tag ghcr.io/bd250227/ftr:latest
+        docker tag "ghcr.io/bd250227/ftr:${SHORT_SHA}" ghcr.io/bd250227/ftr:latest
         docker push ghcr.io/bd250227/ftr:latest
